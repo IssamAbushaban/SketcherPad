@@ -10,6 +10,6 @@ public class DrawToASCII {
             System.out.println(e.toString());
             System.exit(0);
         }
-        new Sketcher_Pad(res,res);
+        new Sketcher_Pad(res);
     }
 }
