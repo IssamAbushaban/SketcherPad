@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class Sketcher_Pad implements MouseListener {
+public class Sketcher_Pad implements MouseListener, MouseMotionListener {
     /* Global Variables =====================================================================*/
     JFrame window;
     JPanel gridPad;
@@ -31,6 +31,7 @@ public class Sketcher_Pad implements MouseListener {
                 gridLabels[i][j].setName(i+","+j);
                 gridLabels[i][j].setOpaque(true);
                 gridLabels[i][j].addMouseListener(this);
+                gridLabels[i][j].addMouseMotionListener(this);
                 gridLabels[i][j].setBackground(new Color(i+j,i+j,i+j));
                 gridPad.add(gridLabels[i][j]);
             }
@@ -66,27 +67,34 @@ public class Sketcher_Pad implements MouseListener {
         System.out.println(e.getComponent().getName() + " pressed");
      }
  
-     public void mouseReleased(MouseEvent e) {
+    public void mouseReleased(MouseEvent e) {
         System.out.println(e.getComponent().getName() + " released");
-     }
+    }
  
-     public void mouseEntered(MouseEvent e) {
+    public void mouseEntered(MouseEvent e) {
+        System.out.println(e.getComponent().getName() + " entered");
+    }
+ 
+    public void mouseExited(MouseEvent e) {
+        System.out.println(e.getComponent().getName() + " exited");
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        reset();
+        System.out.println(e.getComponent().getName() + " clicked");
+    }
+
+    public void mouseDragged(MouseEvent e) {
         String name = e.getComponent().getName();
         int i = Integer.parseInt(name.split(",")[0]);
         int j = Integer.parseInt(name.split(",")[1]);
         updateColor(i,j, randColor.nextInt(256),randColor.nextInt(256),randColor.nextInt(256));
-        System.out.println(e.getComponent().getName() + " entered");
-     }
- 
-     public void mouseExited(MouseEvent e) {
-        System.out.println(e.getComponent().getName() + " exited");
-     }
+        System.out.println(name + " dragged");
+    }
 
-     public void mouseClicked(MouseEvent e) {
-        String name = e.getComponent().getName();
-        reset();
-        System.out.println(name + " clicked");
-     }
+    public void mouseMoved(MouseEvent e) {
+        System.out.println(e.getComponent().getName() + " moved");
+    }
     /* =====================================================================================*/
     /* Helper Functions ====================================================================*/
     public void updateColor(int i, int j, int rVal, int gVal, int bVal) {
